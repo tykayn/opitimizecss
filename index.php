@@ -12,11 +12,16 @@ and open the template in the editor.
 
     </head>
     <?php
+    error_reporting(0);
+    $file = file_get_contents("test.css");
+    $file = str_replace(PHP_EOL, '', $file);
+    $op = array();
+    
     require("op.php");
     
-//print_r($tableau);
+//var_dump($tableau);
     $optimised = "";
-    $optimised = printcss( $tableau );
+    $optimised = printcss( optimise( trim($file) ) );
     $longueur_new = strlen($optimised);
     ?>
 
@@ -28,6 +33,7 @@ and open the template in the editor.
 <?php echo nl2br($file); ?></pre>
             </div>
         </div>
+
         <div  class="span5">
             Feuille optimisée et rangée: <?php echo $longueur_new; ?>
             
@@ -35,9 +41,15 @@ and open the template in the editor.
 <pre><?php echo $optimised; ?></pre>
 
             </div>
+                    
+        </div>
+        <div  class="span5">
+            Logs
             <div id="log" class="css" >
-<pre><?php print_r($tableau); ?></pre>
+<pre><?php // var_dump($optimised); ?></pre>
+<pre><?php  var_dump($tableau); ?></pre>
             </div>
+            
         </div>
     </body>
 </html>

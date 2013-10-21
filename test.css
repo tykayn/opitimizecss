@@ -1,20 +1,12 @@
-a1{
-    display: inline;
-}
-
 a{
+    color: blue;
+}
+a ,  b {
     display: inline-block;
 }
 
-a{
-    display: inline;
-    display: block;
-}
-a , b{
-    color: blue
-}
 
-b{
-    color: red;
-    display: inline;
+
+a{
+    background: green;
 }
