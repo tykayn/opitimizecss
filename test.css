@@ -1,0 +1,17 @@
+a1{
+    display: inline;
+}
+
+a{
+    display: inline-block;
+}
+
+a{
+    display: inline;
+    display: block;
+}
+
+b{
+    color: red;
+    display: inline;
+}
