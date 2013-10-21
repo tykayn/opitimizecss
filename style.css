@@ -1,7 +1,9 @@
 body{
     word-break: break-all;
     word-wrap: break-word;
-        
+    font-family: calibri, arial;
+    width:90%;
+    margin: 0 auto;
 }
 #unoptimised{
     display:block;
@@ -20,4 +22,13 @@ div{
 pre{
     display: block;
     width: 100%;
+}
+
+.well{
+    background:#dedede;
+    padding:10px;
+    border-radius: 5px;
+    margin: 15px;
+    display: inline-block;
+    float: right;
 }

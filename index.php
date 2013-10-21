@@ -26,10 +26,15 @@ and open the template in the editor.
     $optimised = printcss( optimise( trim($file) ) , 0 );
     $longueur_old = strlen($file);
     $longueur_new = strlen($optimised);
+    $gain_compression = (1-round($longueur_new / $longueur_old, 2) )*100 . '%';
     ?>
 
     <body>
         <h1>Optimiseur de CSS simple</h1>
+        <div class="well">Cet optimiseur n'est pas compatible avec les média queries pour l'instant
+        <br/>L'optimisation comprend:
+        La non répétition des sélecteurs, des instructions qui se retrouvent écrasées.
+        </div>
         <div class="span5">
             <h2>Feuille pas optimisée: <?php echo $longueur_old; ?></h2>
             <div id="unoptimised"  class="css">
@@ -39,7 +44,7 @@ and open the template in the editor.
         </div>
 
         <div  class="span5">
-           <h2> Feuille optimisée et rangée: <?php echo $longueur_new; ?></h2>
+           <h2> Feuille optimisée et rangée: <?php echo $longueur_new; ?>. gain: <?php echo $gain_compression; ?></h2>
             
             <div id="optimised" class="css" >
 <pre><?php echo $optimised; ?></pre>
@@ -56,12 +61,15 @@ and open the template in the editor.
             </div>
             
         </div>
+        
+        
+        
         <footer>
-            
+            <div class="well">
             <a href="https://github.com/tykayn">github tykayn</a>
             <br />
             <a href="http://artlemoine.com">portfolio artlemoine.com</a> 
-            
+            </div>
             
         </footer>
     </body>

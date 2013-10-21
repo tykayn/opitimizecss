@@ -28,7 +28,7 @@ function optimise($css) {
             }
         }
     }
-   // var_dump($watch);
+ //   var_dump($watch);
     return $watch;
 }
 
@@ -44,10 +44,11 @@ function printcss($array, $options = 1) {
 
         if ($key != ' ' || $key != '') {
             $echo .= '' . $key . '{';
+            
             foreach ($value as $k => $v) {
-                $value .= $k . ':' . $v;
+                $value .= '' . $k . ':' . $v;
             }
-            $echo .= $value . '}';
+            $echo .= str_replace("Array", '',$value)  . '}';
             $echo .= '<br/><br/>';
         }
     }
