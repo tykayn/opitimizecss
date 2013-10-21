@@ -13,7 +13,9 @@ and open the template in the editor.
     </head>
     <?php
     error_reporting(0);
-    $file = file_get_contents("test.css");
+    //TODO get the POST data if send by user
+    $filepath = "test.css";
+    $file = file_get_contents($filepath);
     $file = str_replace(PHP_EOL, '', $file);
     $op = array();
     
@@ -21,21 +23,23 @@ and open the template in the editor.
     
 //var_dump($tableau);
     $optimised = "";
-    $optimised = printcss( optimise( trim($file) ) );
+    $optimised = printcss( optimise( trim($file) ) , 0 );
+    $longueur_old = strlen($file);
     $longueur_new = strlen($optimised);
     ?>
 
     <body>
+        <h1>Optimiseur de CSS simple</h1>
         <div class="span5">
-            Feuille pas optimisée: <?php echo $longueur_old; ?>
+            <h2>Feuille pas optimisée: <?php echo $longueur_old; ?></h2>
             <div id="unoptimised"  class="css">
                 <pre>
-<?php echo nl2br($file); ?></pre>
+<?php echo $file; ?></pre>
             </div>
         </div>
 
         <div  class="span5">
-            Feuille optimisée et rangée: <?php echo $longueur_new; ?>
+           <h2> Feuille optimisée et rangée: <?php echo $longueur_new; ?></h2>
             
             <div id="optimised" class="css" >
 <pre><?php echo $optimised; ?></pre>
@@ -46,11 +50,20 @@ and open the template in the editor.
         <div  class="span5">
             Logs
             <div id="log" class="css" >
-<pre><?php // var_dump($optimised); ?></pre>
-<pre><?php  var_dump($tableau); ?></pre>
+<pre><?php  var_dump($optimised); ?></pre>
+<pre><?php  var_dump($file); ?></pre>
+
             </div>
             
         </div>
+        <footer>
+            
+            <a href="https://github.com/tykayn">github tykayn</a>
+            <br />
+            <a href="http://artlemoine.com">portfolio artlemoine.com</a> 
+            
+            
+        </footer>
     </body>
 </html>
 
