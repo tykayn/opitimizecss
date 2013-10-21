@@ -10,6 +10,9 @@ a{
     display: inline;
     display: block;
 }
+a , b{
+    color: blue
+}
 
 b{
     color: red;

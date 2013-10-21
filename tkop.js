@@ -1,44 +1,44 @@
 jQuery(document).ready(function($) {
 
-    var filecontent, optimised;
+    window.filecontent;
+    var optimised;
+    var style;
     function nl2br(str, is_xhtml) {
         var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
         return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
     }
 
-
 // prendre la feuille de test et la placer dans la vue dans la div #unoptimised
-    function loadXMLDoc(source, filecontent)
-    {
-        console.log('ajax de ' + source + 'lancé');
-        $.ajax({
-            url: source,
-        })
-                .done(function(data) {
-            filecontent = data;
+    css = $.ajax({
+        url: "test.css",
+    })
+            .done(function(data) {
+        filecontent = data;
 
-            $('#unoptimised').html(nl2br(data, false));
-            return filecontent;
-        });
-    }
+        resultat = data.split('}');
+        $('#log').append('<br/>result.length ').append(resultat.length);
+        $('#log').append('<br/>').append(resultat);
+        var style;
+        $(resultat).each(function(index) {
+            
+            split = resultat[index].split('{');
+            $('#log').append('<br/>').append(split[0]);
+            $('#log').append('<br/>----').append(split[1]);
+//            console.log(split[0]);
+//            console.log(split[1]);
+   // TODO prob de déclaration implicite de la variable style
+//             style[index]['target'] = split[0] ;
+//             style[index]['instructions'] = split[1];
+        })
+        console.log(style);
+        console.log(resultat.length);
+        $('#unoptimised').html(nl2br(data, false));
+        return data;
+    });
+
+    $('#log').append('<br/>yeah');
+
 
 //optimisation
-    //découpage en instructions du fichier
-    function build(source, optimised) {
-        console.log('build lancé');
-        console.log('build: ' + source);
-
-        $('#optimised').html('OOOOO' + optimised);
-        return optimised;
-    }
-
-//lancement des actions
-    filecontent = loadXMLDoc(source, filecontent)
-    build(source, optimised);
-// rendu dans la partie .optimised
-    $("#optimised").html(optimised);
-
-    var css = "a{    display: inline;}a{      display: inline-block;  }    a{      display: inline;      display: block;  }    b{      color: red;      display: inline;  }";
-    console.log('essai  ' + css.length + '');
-
+    //découpage en instructions du fichier        
 });
