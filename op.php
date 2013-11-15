@@ -15,7 +15,8 @@ function optimise($css) {
     $tableau = explode("}", $css);
     $op;
     $watch = array();
-
+    $GLOBALS['ecrasement'] = 0;
+    
     foreach ($tableau as $key => $value) {
         $boom = explode('{', $value);
         if ($boom[0] != null) {
@@ -23,8 +24,9 @@ function optimise($css) {
             // écraser instruction avec le plus ancien
             $explode = explode(':', cleaner($boom[1]));
             // si l'instruction est déjà présente pour ce sélecteur, l'écraser
-            if (!isset($watch[$cible][$explode[0]])) {
+            if (!isset($watch[$selecteur][$explode[0]])) {
                 $watch[$selecteur][$explode[0]] = $explode[1];
+                $GLOBALS['ecrasement']++;
             }
         }
     }
@@ -39,7 +41,7 @@ function optimise($css) {
  * @return string
  */
 function printcss($array, $options = 1) {
-    $echo;
+    $echo = '' ;
     foreach ($array as $key => $value) {
 
         if ($key != ' ' || $key != '') {
