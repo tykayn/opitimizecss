@@ -59,27 +59,69 @@ $GLOBALS['compressibles'] = array(
 );
 
 function combine($mix) {
-//    var_dump('mix');
-//    var_dump($mix);
-    if (!isset($mix['top'])) {
-        $mix['top'] = '';
-    }
-    if (!isset($mix['right'])) {
-        $mix['right'] = '';
-    }
+    var_dump('mix');
+    var_dump($mix);
 
-    if (!isset($mix['bottom'])) {
-        $mix['bottom'] = '';
-    }
-    if (!isset($mix['left'])) {
-        $mix['left'] = '';
-    }
 
-    $str = $mix['top'] . ' ' .
-            $mix['right'] . ' ' .
-            $mix['bottom'] . ' ' .
-            $mix['left'] . ' '
-    ;
+
+
+    
+    if (
+            isset($mix['top']) &&
+            isset($mix['right']) &&
+            isset($mix['bottom']) &&
+            isset($mix['left'])
+    ) {
+
+        //écriture en deux éléments: vertical , latéral.
+        if (
+                $mix['top'] == $mix['bottom'] &&
+                $mix['right'] == $mix['left']
+        ) {
+            $str = $mix['top'] . ' ' . $mix['right']
+            ;
+        }
+        //écriture en trois éléments: haut , latéral, bas.
+        elseif(
+                $mix['top'] == $mix['bottom'] &&
+                $mix['right'] == $mix['left']
+                ){
+            $str = $mix['top'] . ' ' . $mix['right']. ' '. $mix['bottom'];
+        }
+        //écriture en 1 éléments, tous les cotés pareils
+        elseif (
+                $mix['top'] == $mix['bottom'] && $mix['top'] == $mix['right'] && $mix['top'] == $mix['left']
+        ) {
+            $str = $mix['top'];
+        } else {
+            //écriture en 4 éléments, tous différents
+            $str = $mix['top'] . ' ' .
+                    $mix['right'] . ' ' .
+                    $mix['bottom'] . ' ' .
+                    $mix['left'] . ' '
+            ;
+        }
+    } else {
+        if (!isset($mix['top'])) {
+            $mix['top'] = '';
+        }
+        if (!isset($mix['right'])) {
+            $mix['right'] = '';
+        }
+
+        if (!isset($mix['bottom'])) {
+            $mix['bottom'] = '';
+        }
+        if (!isset($mix['left'])) {
+            $mix['left'] = '';
+        }
+
+        $str = $mix['top'] . ' ' .
+                $mix['right'] . ' ' .
+                $mix['bottom'] . ' ' .
+                $mix['left'] . ' '
+        ;
+    }
     return $str . ';';
 }
 
@@ -115,7 +157,7 @@ function optimise($css) {
                     if (in_array($propriete, $GLOBALS['compressibles'])) {
                         $details = explode('-', $propriete);
                         $propriete = $propCompressed = $details[0];
-                         '';
+                        '';
 
                         $side = $details[1];
                         // créer un tableau avec les cotés de la prorpiété,
@@ -125,7 +167,6 @@ function optimise($css) {
                             $watch[$selecteur][$propCompressed] = '';
                         }
                         continue;
-                        
                     } else {
                         // si l'instruction est déjà présente pour ce sélecteur, l'écraser
                         if (!isset($watch[$selecteur][$propriete]) && $instruction != '') {
