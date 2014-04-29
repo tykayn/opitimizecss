@@ -15,7 +15,7 @@
         <div class="span12">
         
             <div class="span5">
-                <h2>Feuille pas optimisée:</h2>
+                <h2>Entrée:</h2>
                 <div id="unoptimised"  class="css">
                     <pre>
                         '.  $file .'</pre>
@@ -24,10 +24,10 @@
                  '.  $longueur_old .' caractères.</div>
             </div>
             <div  class="span5 ">
-                <h2> Feuille optimisée et rangée:</h2>
+                <h2> Sortie:</h2>
                 
                 <div id="optimised" class="css" >
-                    <pre> '.$optimised.'></pre>
+                    <pre> '.$optimised.' </pre>
                 </div>
                 <div class="stats" >
                 '.  $longueur_new .' caractères. gain: '.  $gain_compression .'. réécritures: '. $GLOBALS['ecrasement']  .'

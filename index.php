@@ -14,8 +14,7 @@ and open the template in the editor.
     </head>
     <?php
     error_reporting(E_ALL);
-    //TODO get the POST data if send by user
-    $filepath = "css/test.css";
+    $filepath = "css/1.css";
     $file = file_get_contents($filepath);
     $file = str_replace(PHP_EOL, '', $file);
     $op = array();
@@ -38,28 +37,7 @@ and open the template in the editor.
 
 
             <h1>Optimiseur de CSS simple</h1>
-            <div class="row">
-                <div class="span5">
-                    <div class="well">
-                        Cet optimiseur n'est pas compatible avec les média queries pour l'instant
-                        <br/>L'optimisation comprend:
-                        La non répétition des sélecteurs, des instructions qui se retrouvent écrasées.
-                    </div>
-                </div>
-                <div class="span5">
-                    <form action="" method="POST">
-                        <textarea name="lecss" id="lecss" cols="30" rows="10"><?php echo $lecss; ?></textarea>
-                        <input type="submit" value="optimiser"/>
-                    </form>
-                </div>
-                
-            </div>
-                <?php
-                if ($newCss != '') {
-
-                    echo ' <div class="well"> ' . $newCss . '</div>';
-                }
-                ?>
+            
             <h2>Expected:</h2>
             <div class="span4 well">
                 a{
@@ -70,45 +48,43 @@ and open the template in the editor.
                 }
             </div>
             <?php
-            require("tpl/demo_line.php");
+            
             $filepath = "css/1.css";
             require("tpl/demo_line.php");
             ?>
             <hr />
+            
+            
+            <div class="row">
+                <div class="span5">
+                    <div class="alert alert-info">
+                        Cet optimiseur n'est pas compatible avec les média queries pour l'instant
+                        <br/>L'optimisation comprend:
+                        La non répétition des sélecteurs, des instructions qui se retrouvent écrasées.
+                    </div>
+                </div>
+                <div class="span5">
+                    <form action="" method="POST">
+                        <textarea name="lecss" id="lecss" cols="60" rows="10"><?php echo $lecss; ?></textarea>
+                        <input class="btn btn-primary" type="submit" value="optimiser"/>
+                    </form>
+                </div>
+                
+            </div>
+                <?php
+                if ($newCss != '') {
 
-            <h2>Expected:</h2>
-            <div class="span4 well">
-                a{
-                border: 1px 2px 3px 4px; 
+                    echo ' <h1> Résultat:</h1> <div class="well" contenteditable=true > ' . $newCss . '</div>';
                 }
-                b{
-                border: 10px 0; 
-                }
-            </div>
-            <?php
-            $filepath = "css/2.css";
-            require("tpl/demo_line.php");
-            ?>
-            <hr />
-            <h2>Expected:</h2>
-            <div class="span4 well">
-                a{
-                padding: 1px 2px 3px 4px; 
-                }
-                b{
-                padding: 10px 0; 
-                }
-            </div>
-            <?php
-            $filepath = "css/3.css";
-            require("tpl/demo_line.php");
-            ?>
-            <hr />
+                ?>
+            
 
 
             <div  class="">
                 <h1>Logs</h1>
                 <div id="log" class="css" >
+                    écrasements: <pre><?php var_dump($GLOBALS['ecrasement']); ?></pre>
+                    
                     <pre><?php var_dump($optimised); ?></pre>
                     <pre><?php var_dump($file); ?></pre>
 

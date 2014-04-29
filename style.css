@@ -22,7 +22,8 @@ body{
     min-height: 200px;
 }
 hr{
-    color: #000;
+
+    border-top: 1px solid #000 !important;
     
 }
 /*#unoptimised{
