@@ -59,8 +59,8 @@ $GLOBALS['compressibles'] = array(
 );
 
 function combine($mix) {
-    var_dump('mix');
-    var_dump($mix);
+//    var_dump('mix');
+//    var_dump($mix);
 
 
 
@@ -83,8 +83,9 @@ function combine($mix) {
         }
         //écriture en trois éléments: haut , latéral, bas.
         elseif(
-                $mix['top'] == $mix['bottom'] &&
-                $mix['right'] == $mix['left']
+                $mix['right'] == $mix['left'] &&
+               $mix['top'] != $mix['bottom']
+                
                 ){
             $str = $mix['top'] . ' ' . $mix['right']. ' '. $mix['bottom'];
         }
