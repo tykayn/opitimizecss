@@ -1,0 +1,12 @@
+.thirds > li:last-child { 
+	margin-right: 0; 
+}
+@media screen and (max-width: 1140px) { 
+	#Header #Logo { 
+		margin-right: -10px;
+		left: -10px; 
+	}
+	#Header #MainNav > li { 
+		margin: 0 5px; 
+	}
+}

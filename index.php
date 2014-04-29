@@ -19,10 +19,13 @@ and open the template in the editor.
     $file = file_get_contents($filepath);
     $file = str_replace(PHP_EOL, '', $file);
     $op = array();
+    $lecss = '';
 
     require("op.php");
 
-//var_dump($tableau);
+    $lecss = setCss();
+    $newCss = opFromFile($lecss);
+//var_dump($newCss);
     $optimised = "";
     $optimised = printcss(optimise(trim($file)), 0);
     $longueur_old = strlen($file);
@@ -35,42 +38,51 @@ and open the template in the editor.
 
 
             <h1>Optimiseur de CSS simple</h1>
-            <div class="row-fluid">
-                <div class="span5"><div class="well">Cet optimiseur n'est pas compatible avec les média queries pour l'instant
+            <div class="row">
+                <div class="span5">
+                    <div class="well">
+                        Cet optimiseur n'est pas compatible avec les média queries pour l'instant
                         <br/>L'optimisation comprend:
                         La non répétition des sélecteurs, des instructions qui se retrouvent écrasées.
-                    </div></div>
+                    </div>
+                </div>
                 <div class="span5">
-                    <form action="/" method="POST">
-                        <textarea name="lecss" id="lecss" cols="30" rows="10"></textarea>
+                    <form action="" method="POST">
+                        <textarea name="lecss" id="lecss" cols="30" rows="10"><?php echo $lecss; ?></textarea>
                         <input type="submit" value="optimiser"/>
                     </form>
                 </div>
-            </div>
-            <h2>Expected:</h2>
-            <div class="span12 well">
-                a{
-                    margin: 1px 2px 3px 4px; 
-                }
-                b{
-                    margin: 10px 0; 
-                }
+                
             </div>
                 <?php
+                if ($newCss != '') {
+
+                    echo ' <div class="well"> ' . $newCss . '</div>';
+                }
+                ?>
+            <h2>Expected:</h2>
+            <div class="span4 well">
+                a{
+                margin: 1px 2px 3px 4px; 
+                }
+                b{
+                margin: 10px 0; 
+                }
+            </div>
+            <?php
             require("tpl/demo_line.php");
             $filepath = "css/1.css";
             require("tpl/demo_line.php");
-            
             ?>
             <hr />
-            
+
             <h2>Expected:</h2>
-            <div class="span12 well">
+            <div class="span4 well">
                 a{
-                    border: 1px 2px 3px 4px; 
+                border: 1px 2px 3px 4px; 
                 }
                 b{
-                    border: 10px 0; 
+                border: 10px 0; 
                 }
             </div>
             <?php
@@ -79,12 +91,12 @@ and open the template in the editor.
             ?>
             <hr />
             <h2>Expected:</h2>
-            <div class="span12 well">
+            <div class="span4 well">
                 a{
-                    padding: 1px 2px 3px 4px; 
+                padding: 1px 2px 3px 4px; 
                 }
                 b{
-                    padding: 10px 0; 
+                padding: 10px 0; 
                 }
             </div>
             <?php
