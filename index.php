@@ -38,48 +38,22 @@ and open the template in the editor.
 
             <h1>Optimiseur de CSS simple</h1>
             
-            <h2>Expected:</h2>
-            <div class="span4 well">
-                a{
-                margin: 1px 2px 3px 4px; 
-                }
-                b{
-                margin: 10px 0; 
-                }
-            </div>
             <?php
             
-            $filepath = "css/1.css";
+            $filepath = "css/6.css";
             require("tpl/demo_line.php");
             ?>
             <hr />
             
             
-            <div class="row">
-                <div class="span5">
-                    <div class="alert alert-info">
-                        Cet optimiseur n'est pas compatible avec les média queries pour l'instant
-                        <br/>L'optimisation comprend:
-                        La non répétition des sélecteurs, des instructions qui se retrouvent écrasées.
-                    </div>
-                </div>
-                <div class="span5">
-                    <form action="" method="POST">
-                        <textarea name="lecss" id="lecss" cols="60" rows="10"><?php echo $lecss; ?></textarea>
-                        <input class="btn btn-primary" type="submit" value="optimiser"/>
-                    </form>
-                </div>
-                
-            </div>
-                <?php
-                if ($newCss != '') {
-
-                    echo ' <h1> Résultat:</h1> <div class="well" contenteditable=true > ' . $newCss . '</div>';
-                }
-                ?>
             
-
-
+            
+ <?php 
+          //  require('tpl/form.php');
+            
+          //  require('tpl/demos.php');
+            ?>
+           
             <div  class="">
                 <h1>Logs</h1>
                 <div id="log" class="css" >

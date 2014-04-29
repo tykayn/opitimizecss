@@ -61,40 +61,36 @@ $GLOBALS['compressibles'] = array(
 function combine($mix) {
 //    var_dump('mix');
 //    var_dump($mix);
-
-
-
-
-    
     if (
             isset($mix['top']) &&
             isset($mix['right']) &&
             isset($mix['bottom']) &&
             isset($mix['left'])
     ) {
-
-        //écriture en deux éléments: vertical , latéral.
+    //écriture en 1 éléments, tous les cotés pareils
         if (
+                $mix['top'] == $mix['bottom'] && $mix['top'] == $mix['right'] && $mix['top'] == $mix['left']
+        ) {
+            $str = $mix['top'];
+        }
+        
+        //écriture en deux éléments: vertical , latéral.
+        elseif (
                 $mix['top'] == $mix['bottom'] &&
                 $mix['right'] == $mix['left']
         ) {
             $str = $mix['top'] . ' ' . $mix['right']
             ;
         }
+        
         //écriture en trois éléments: haut , latéral, bas.
-        elseif(
-                $mix['right'] == $mix['left'] &&
-               $mix['top'] != $mix['bottom']
-                
-                ){
-            $str = $mix['top'] . ' ' . $mix['right']. ' '. $mix['bottom'];
-        }
-        //écriture en 1 éléments, tous les cotés pareils
         elseif (
-                $mix['top'] == $mix['bottom'] && $mix['top'] == $mix['right'] && $mix['top'] == $mix['left']
+                $mix['right'] == $mix['left'] &&
+                $mix['top'] != $mix['bottom']
         ) {
-            $str = $mix['top'];
-        } else {
+            $str = $mix['top'] . ' ' . $mix['right'] . ' ' . $mix['bottom'];
+        }
+         else {
             //écriture en 4 éléments, tous différents
             $str = $mix['top'] . ' ' .
                     $mix['right'] . ' ' .
@@ -133,6 +129,7 @@ function combine($mix) {
  */
 function optimise($css) {
     $tableau = cssToArray($css);
+    sort($tableau);
     $op;
     $watch = array();
     $GLOBALS['ecrasement'] = 0;
@@ -167,7 +164,7 @@ function optimise($css) {
                         if (!isset($watch[$selecteur][$propCompressed])) {
                             $watch[$selecteur][$propCompressed] = '';
                         }
-                        continue;
+//                        continue;
                     } else {
                         // si l'instruction est déjà présente pour ce sélecteur, l'écraser
                         if (!isset($watch[$selecteur][$propriete]) && $instruction != '') {
@@ -177,7 +174,10 @@ function optimise($css) {
                     }
                 }
             }
-            $watch[$selecteur][$propCompressed] = combine($mix);
+            if(count($mix) > 0){
+                $watch[$selecteur][$propriete] = combine($mix);
+            }
+            
         }
     }
 //       var_dump($watch);
