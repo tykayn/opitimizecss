@@ -141,7 +141,7 @@ function optimise($css) {
         $boom = explode('{', $value);
         if ($boom[0] != null) {
             $selecteur = trim(cleaner($boom[0]));
-            var_dump($selecteur);
+//            var_dump($selecteur);
             // quand il y a plus d'une propriété/valeur
             $paires = explode(';', cleaner($boom[1]));
             foreach ($paires as $p) {
@@ -153,6 +153,14 @@ function optimise($css) {
                     $instruction = trim($explode[1]);
                     // si la propriété est compressible, la combiner
                     if (in_array($propriete, $GLOBALS['compressibles'])) {
+                        
+                        //reprendre le tableau de mix s'il existe dans un sélecteur précédent.
+                        if (!isset($watch[$selecteur]['compressed'])) {
+                            $watch[$selecteur]['compressed'] = '';
+                        }
+                        else{
+                            $mix = $watch[$selecteur]['compressed'];
+                        }
                         $details = explode('-', $propriete);
                         $propriete = $propCompressed = $details[0];
                         '';
@@ -162,9 +170,7 @@ function optimise($css) {
                         //  pour ensuite les combiner
                         $mix[$propriete][$side] = $instruction;
 //                        var_dump($propriete);
-                        if (!isset($watch[$selecteur]['compressed'])) {
-                            $watch[$selecteur]['compressed'] = '';
-                        }
+                        
                         
                             $watch[$selecteur]['compressed'] = $mix;
                         
@@ -208,8 +214,8 @@ function combineProp($tab){
 
                 $comb = combine($value);
                 $v[$key] = $comb ;
-//                var_dump( 'combine ' . $key . '  = ' . $comb ); 
-                unset($v['compressed'][$key]);
+//                var_dump( $k.' combine ' . $key . '  = ' . $comb ); 
+//                unset($v['compressed'][$key]);
                 $tab[$k] = $v;
             } 
 
