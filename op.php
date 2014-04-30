@@ -37,8 +37,8 @@ function cssToArray($css) {
 
         $boom = explode('{', $value);
         $selecteur = trim(cleaner($boom[0]));
-
-        if ($selecteur != null) {
+        
+        if ($selecteur != null &&count( $boom) > 1) {
             $instructions = $boom[1];
             // si le sélecteur a des virgules,
             // copier les instructions pour chaque partie entre les virgules.
@@ -57,7 +57,8 @@ function cssToArray($css) {
     }
 //    var_dump( $tab);
 //    var_dump($newtab);
-    $tab = $newtab;
+    // fusion des tableaux
+    $tab = array_merge($tab,  $newtab);
 
 
     return $tab;
