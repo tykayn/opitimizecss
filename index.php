@@ -37,31 +37,30 @@ and open the template in the editor.
 
 
             <h1>Optimiseur de CSS simple</h1>
-            
+
             <?php
-            
-            $filepath = "css/test.css";
+            $filepath = "css/8.css";
             require("tpl/demo_line.php");
             ?>
             <hr />
-            
-            
+
+
             TODO:
+
             
-            rassembler les sélecteurs séparés par des virgules tel que a, b = b, a.
             -permettre d'extraire des instructions selon leur stype dans des résultats séparés. Par exemple: sortir un ensemble de sélecteurs ne donnant que des instructions sur les font-size, font-weight.
-            
- <?php 
+
+            <?php
             require('tpl/form.php');
-            
-          //  require('tpl/demos.php');
+
+            //  require('tpl/demos.php');
             ?>
-           
+
             <div  class="">
                 <h1>Logs</h1>
                 <div id="log" class="css" >
                     écrasements: <pre><?php var_dump($GLOBALS['ecrasement']); ?></pre>
-                    
+
                     <pre><?php var_dump($optimised); ?></pre>
                     <pre><?php var_dump($file); ?></pre>
 

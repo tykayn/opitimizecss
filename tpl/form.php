@@ -3,7 +3,13 @@
                     <div class="alert alert-info">
                         Cet optimiseur n'est pas compatible avec les média queries pour l'instant
                         <br/>L'optimisation comprend:
-                        La non répétition des sélecteurs, des instructions qui se retrouvent écrasées.
+                        <ul>
+                            <li>La non répétition des sélecteurs, des instructions qui se retrouvent écrasées.</li>
+                            <li>rassembler les sélecteurs séparés par des virgules tel que a, b = b, a.</li>
+                            <li>et d'autres trucs absolument dingues</li>
+                        </ul>
+                        
+                        
                     </div>
                 </div>
                 <div class="span5">

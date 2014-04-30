@@ -1,0 +1,4 @@
+a,b {    display: inline-block;
+}
+b,a{    color: red;
+}

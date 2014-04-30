@@ -27,9 +27,39 @@ function cleaner($str) {
  * @param type $css
  */
 function cssToArray($css) {
-    
+
     $css = removeComments($css);
     $tab = explode("}", $css);
+    $newtab = array();
+
+    foreach ($tab as $key => $value) {
+        // tableau des propriétés à combiner pour le sélecteur en cours
+
+        $boom = explode('{', $value);
+        $selecteur = trim(cleaner($boom[0]));
+
+        if ($selecteur != null) {
+            $instructions = $boom[1];
+            // si le sélecteur a des virgules,
+            // copier les instructions pour chaque partie entre les virgules.
+
+            if (hasComma($selecteur)) {
+                $selec = explode(',', trim($selecteur));
+                sort($selec);
+                $selec = join(',', $selec);
+                if (isset($newtab[$selec])) {
+                    $newtab[$selec] .=  $instructions;
+                } else {
+                    $newtab[$selec] =  $selec . '{' .$instructions;
+                }
+            }
+        }
+    }
+//    var_dump( $tab);
+//    var_dump($newtab);
+    $tab = $newtab;
+
+
     return $tab;
 }
 
@@ -43,7 +73,7 @@ function removeComments($css) {
 }
 
 /**
- * 
+ * propriétés que l'on peut combiner en une écriture raccourcie.
  */
 $GLOBALS['compressibles'] = array(
     'margin-top',
@@ -131,14 +161,27 @@ function combine($mix) {
 }
 
 /**
- * 
+ * détecte les sélecteurs a virgule et leur donne des valeurs identiques. 
  * @param type $tab
  * @return array
  */
-function commaTab($tab){
-   return $tab;
+function commaTab($tab) {
+    return $tab;
 }
 
+/**
+ * savoir si un sélecteur présente des virgules
+ * @param type $selecteur
+ * @return boolean
+ */
+function hasComma($selecteur) {
+    $boom = explode(',', $selecteur);
+    if (count($boom) > 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 /**
  * convertit une chaine de css en tableau optimisé
@@ -161,9 +204,12 @@ function optimise($css) {
         $boom = explode('{', $value);
         $selecteur = trim(cleaner($boom[0]));
 
-        if ($selecteur != null) {
-
+        if ($selecteur != null && isset($boom[1])) {
             $instructions = $boom[1];
+
+
+
+
 //            var_dump($selecteur);
             // quand il y a plus d'une propriété/valeur
             $paires = explode(';', cleaner($instructions));
