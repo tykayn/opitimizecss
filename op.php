@@ -59,21 +59,20 @@ $GLOBALS['compressibles'] = array(
 );
 
 function combine($mix) {
-//    var_dump('mix');
-//    var_dump($mix);
+
     if (
             isset($mix['top']) &&
             isset($mix['right']) &&
             isset($mix['bottom']) &&
             isset($mix['left'])
     ) {
-    //écriture en 1 éléments, tous les cotés pareils
+        //écriture en 1 éléments, tous les cotés pareils
         if (
                 $mix['top'] == $mix['bottom'] && $mix['top'] == $mix['right'] && $mix['top'] == $mix['left']
         ) {
             $str = $mix['top'];
         }
-        
+
         //écriture en deux éléments: vertical , latéral.
         elseif (
                 $mix['top'] == $mix['bottom'] &&
@@ -82,15 +81,14 @@ function combine($mix) {
             $str = $mix['top'] . ' ' . $mix['right']
             ;
         }
-        
+
         //écriture en trois éléments: haut , latéral, bas.
         elseif (
                 $mix['right'] == $mix['left'] &&
                 $mix['top'] != $mix['bottom']
         ) {
             $str = $mix['top'] . ' ' . $mix['right'] . ' ' . $mix['bottom'];
-        }
-         else {
+        } else {
             //écriture en 4 éléments, tous différents
             $str = $mix['top'] . ' ' .
                     $mix['right'] . ' ' .
@@ -124,7 +122,7 @@ function combine($mix) {
 
 /**
  * convertit une chaine de css en tableau optimisé
- * @param type $css
+ * @param array $css
  * @return array
  */
 function optimise($css) {
@@ -138,16 +136,18 @@ function optimise($css) {
      * passer en examen chaque bloc d'instruction
      */
     foreach ($tableau as $key => $value) {
+        // tableau des propriétés à combiner pour le sélecteur en cours
         $mix = array();
         $boom = explode('{', $value);
         if ($boom[0] != null) {
             $selecteur = trim(cleaner($boom[0]));
+            var_dump($selecteur);
             // quand il y a plus d'une propriété/valeur
             $paires = explode(';', cleaner($boom[1]));
             foreach ($paires as $p) {
                 if ($p != '') {
 
-                    // écraser instruction avec le plus ancien
+                    // séparer propriété et sa valeur
                     $explode = explode(':', $p);
                     $propriete = trim($explode[0]);
                     $instruction = trim($explode[1]);
@@ -156,34 +156,69 @@ function optimise($css) {
                         $details = explode('-', $propriete);
                         $propriete = $propCompressed = $details[0];
                         '';
-
+                        
                         $side = $details[1];
                         // créer un tableau avec les cotés de la prorpiété,
                         //  pour ensuite les combiner
-                        $mix[$side] = $instruction;
-                        if (!isset($watch[$selecteur][$propCompressed])) {
-                            $watch[$selecteur][$propCompressed] = '';
+                        $mix[$propriete][$side] = $instruction;
+//                        var_dump($propriete);
+                        if (!isset($watch[$selecteur]['compressed'])) {
+                            $watch[$selecteur]['compressed'] = '';
                         }
+                        
+                            $watch[$selecteur]['compressed'] = $mix;
+                        
 //                        continue;
-                    } else {
+                    } 
                         // si l'instruction est déjà présente pour ce sélecteur, l'écraser
                         if (!isset($watch[$selecteur][$propriete]) && $instruction != '') {
                             $watch[$selecteur][$propriete] = $instruction;
                             $GLOBALS['ecrasement'] ++;
                         }
-                    }
+                    
                 }
             }
-            if(count($mix) > 0){
+//            var_dump($mix);
+            if (count($mix) > 0) {
                 $watch[$selecteur][$propriete] = combine($mix);
             }
-            
         }
     }
-//       var_dump($watch);
+       
+//    var_dump(  $watch ); 
+   $watch =  combineProp($watch);
     return $watch;
 }
 
+/**
+ * après un optimise(), combine les propriétés compressibles
+ * @param array $tab tableau de sélecteurs
+ * @return type
+ */
+function combineProp($tab){
+        
+    /**
+     * passer en examen chaque bloc d'instruction
+     */
+    foreach ($tab as $k => $v) {
+        if( isset($v['compressed'])){
+            // si le sélecteur a une partie compressible, 
+            // lui assigner des propriétés de valeur combinée 
+            foreach ($v['compressed'] as $key => $value) {
+
+                $comb = combine($value);
+                $v[$key] = $comb ;
+//                var_dump( 'combine ' . $key . '  = ' . $comb ); 
+                unset($v['compressed'][$key]);
+                $tab[$k] = $v;
+            } 
+
+        }
+        // enlever la propriété 'compressed' qui est en fait un tableau de propriétés compressibles
+        unset($tab[$k]['compressed']);
+    }
+    return $tab;
+}
 /**
  * convertit le tableau de css optimisé en chaine de css
  * @param type $array

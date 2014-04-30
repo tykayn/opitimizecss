@@ -1,5 +1,7 @@
 <?php
     $file = file_get_contents($filepath);
+    
+//    var_dump($filepath);
 //    $file = str_replace(PHP_EOL, '', $file);
     $op = array();
     $optimised = "";
@@ -12,10 +14,11 @@
     echo '
         
         <div  class="row">
+        
         <div class="span12">
         
             <div class="span5">
-                <h2>Entrée:</h2>
+                <h2>Entrée: '.$filepath.'</h2>
                 <div id="unoptimised"  class="css">
                     <pre>
                         '.  $file .'</pre>

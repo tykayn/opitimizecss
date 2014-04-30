@@ -14,9 +14,9 @@ and open the template in the editor.
     </head>
     <?php
     error_reporting(E_ALL);
-    $filepath = "css/1.css";
-    $file = file_get_contents($filepath);
-    $file = str_replace(PHP_EOL, '', $file);
+//    $filepath = "css/1.css";
+//    $file = file_get_contents($filepath);
+//    $file = str_replace(PHP_EOL, '', $file);
     $op = array();
     $lecss = '';
 
@@ -25,11 +25,11 @@ and open the template in the editor.
     $lecss = setCss();
     $newCss = opFromFile($lecss);
 //var_dump($newCss);
-    $optimised = "";
-    $optimised = printcss(optimise(trim($file)), 0);
-    $longueur_old = strlen($file);
-    $longueur_new = strlen($optimised);
-    $gain_compression = (1 - round($longueur_new / $longueur_old, 2) ) * 100 . '%';
+//    $optimised = "";
+//    $optimised = printcss(optimise(trim($file)), 0);
+//    $longueur_old = strlen($file);
+//    $longueur_new = strlen($optimised);
+//    $gain_compression = (1 - round($longueur_new / $longueur_old, 2) ) * 100 . '%';
     ?>
 
     <body>
@@ -40,7 +40,7 @@ and open the template in the editor.
             
             <?php
             
-            $filepath = "css/1.css";
+            $filepath = "css/7.css";
             require("tpl/demo_line.php");
             ?>
             <hr />
@@ -48,7 +48,7 @@ and open the template in the editor.
             
             TODO:
             mettre les compressibles dans un array,
-            au moment de former une chaine avec le tableau de css, combiner les propriétés compressibles.
+            au moment de former une chaine avec le tableau de css, combiner les propriétés compressibles. heh
             
  <?php 
           //  require('tpl/form.php');
