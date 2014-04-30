@@ -40,13 +40,15 @@ and open the template in the editor.
             
             <?php
             
-            $filepath = "css/6.css";
+            $filepath = "css/1.css";
             require("tpl/demo_line.php");
             ?>
             <hr />
             
             
-            
+            TODO:
+            mettre les compressibles dans un array,
+            au moment de former une chaine avec le tableau de css, combiner les propriétés compressibles.
             
  <?php 
           //  require('tpl/form.php');
