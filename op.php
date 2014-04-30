@@ -66,7 +66,7 @@ function combine($mix) {
             isset($mix['bottom']) &&
             isset($mix['left'])
     ) {
-        
+
         //écriture en 1 éléments, tous les cotés pareils
         if (
                 $mix['top'] == $mix['bottom'] && $mix['top'] == $mix['right'] && $mix['top'] == $mix['left']
@@ -97,17 +97,14 @@ function combine($mix) {
                     $mix['left'] . ' '
             ;
         }
-    } 
-    elseif( 
+    } elseif (
             !isset($mix['top']) &&
             !isset($mix['right']) &&
             !isset($mix['left']) &&
             !isset($mix['bottom'])
-            
-            ){
+    ) {
         $str = '0';
-        
-    }else {
+    } else {
         if (!isset($mix['top'])) {
             $mix['top'] = '0';
         }
@@ -150,8 +147,10 @@ function optimise($css) {
         // tableau des propriétés à combiner pour le sélecteur en cours
         $mix = array();
         $boom = explode('{', $value);
-        if ($boom[0] != null) {
-            $selecteur = trim(cleaner($boom[0]));
+        $selecteur = trim(cleaner($boom[0]));
+        if ($selecteur != null) {
+
+
 //            var_dump($selecteur);
             // quand il y a plus d'une propriété/valeur
             $paires = explode(';', cleaner($boom[1]));
@@ -160,39 +159,41 @@ function optimise($css) {
 
                     // séparer propriété et sa valeur
                     $explode = explode(':', $p);
+                    //si pas d'instruction, ne pas prendre en compte la propriété.
+                    if (!isset($explode[1])) {
+                        continue;
+                    }
                     $propriete = trim($explode[0]);
                     $instruction = trim($explode[1]);
                     // si la propriété est compressible, la combiner
                     if (in_array($propriete, $GLOBALS['compressibles'])) {
-                        
+
                         //reprendre le tableau de mix s'il existe dans un sélecteur précédent.
                         if (!isset($watch[$selecteur]['compressed'])) {
                             $watch[$selecteur]['compressed'] = '';
-                        }
-                        else{
+                        } else {
                             $mix = $watch[$selecteur]['compressed'];
                         }
                         $details = explode('-', $propriete);
                         $propriete = $propCompressed = $details[0];
                         '';
-                        
+
                         $side = $details[1];
                         // créer un tableau avec les cotés de la prorpiété,
                         //  pour ensuite les combiner
                         $mix[$propriete][$side] = $instruction;
 //                        var_dump($propriete);
-                        
-                        
-                            $watch[$selecteur]['compressed'] = $mix;
-                        
+
+
+                        $watch[$selecteur]['compressed'] = $mix;
+
 //                        continue;
-                    } 
-                        // si l'instruction est déjà présente pour ce sélecteur, l'écraser
-                        if (!isset($watch[$selecteur][$propriete]) && $instruction != '') {
-                            $watch[$selecteur][$propriete] = $instruction;
-                            $GLOBALS['ecrasement'] ++;
-                        }
-                    
+                    }
+                    // si l'instruction est déjà présente pour ce sélecteur, l'écraser
+                    if (!isset($watch[$selecteur][$propriete]) && $instruction != '') {
+                        $watch[$selecteur][$propriete] = $instruction;
+                        $GLOBALS['ecrasement'] ++;
+                    }
                 }
             }
 //            var_dump($mix);
@@ -201,9 +202,9 @@ function optimise($css) {
             }
         }
     }
-       
+
 //    var_dump(  $watch ); 
-   $watch =  combineProp($watch);
+    $watch = combineProp($watch);
     return $watch;
 }
 
@@ -212,30 +213,30 @@ function optimise($css) {
  * @param array $tab tableau de sélecteurs
  * @return type
  */
-function combineProp($tab){
-        
+function combineProp($tab) {
+
     /**
      * passer en examen chaque bloc d'instruction
      */
     foreach ($tab as $k => $v) {
-        if( isset($v['compressed'])){
+        if (isset($v['compressed'])) {
             // si le sélecteur a une partie compressible, 
             // lui assigner des propriétés de valeur combinée 
             foreach ($v['compressed'] as $key => $value) {
 //                var_dump($v['compressed'] );
                 $comb = combine($value);
-                $v[$key] = $comb ;
+                $v[$key] = $comb;
 //                var_dump( $k.' combine ' . $key . '  = ' . $comb ); 
 //                unset($v['compressed'][$key]);
                 $tab[$k] = $v;
-            } 
-
+            }
         }
         // enlever la propriété 'compressed' qui est en fait un tableau de propriétés compressibles
         unset($tab[$k]['compressed']);
     }
     return $tab;
 }
+
 /**
  * convertit le tableau de css optimisé en chaine de css
  * @param type $array
