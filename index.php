@@ -40,7 +40,7 @@ and open the template in the editor.
             
             <?php
             
-            $filepath = "css/6.css";
+            $filepath = "css/5.css";
             require("tpl/demo_line.php");
             ?>
             <hr />

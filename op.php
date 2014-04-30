@@ -66,6 +66,7 @@ function combine($mix) {
             isset($mix['bottom']) &&
             isset($mix['left'])
     ) {
+        
         //écriture en 1 éléments, tous les cotés pareils
         if (
                 $mix['top'] == $mix['bottom'] && $mix['top'] == $mix['right'] && $mix['top'] == $mix['left']
@@ -96,19 +97,29 @@ function combine($mix) {
                     $mix['left'] . ' '
             ;
         }
-    } else {
+    } 
+    elseif( 
+            !isset($mix['top']) &&
+            !isset($mix['right']) &&
+            !isset($mix['left']) &&
+            !isset($mix['bottom'])
+            
+            ){
+        $str = '0';
+        
+    }else {
         if (!isset($mix['top'])) {
-            $mix['top'] = '';
+            $mix['top'] = '0';
         }
         if (!isset($mix['right'])) {
-            $mix['right'] = '';
+            $mix['right'] = '0';
         }
 
         if (!isset($mix['bottom'])) {
-            $mix['bottom'] = '';
+            $mix['bottom'] = '0';
         }
         if (!isset($mix['left'])) {
-            $mix['left'] = '';
+            $mix['left'] = '0';
         }
 
         $str = $mix['top'] . ' ' .
@@ -211,7 +222,7 @@ function combineProp($tab){
             // si le sélecteur a une partie compressible, 
             // lui assigner des propriétés de valeur combinée 
             foreach ($v['compressed'] as $key => $value) {
-
+//                var_dump($v['compressed'] );
                 $comb = combine($value);
                 $v[$key] = $comb ;
 //                var_dump( $k.' combine ' . $key . '  = ' . $comb ); 
