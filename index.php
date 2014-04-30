@@ -51,7 +51,7 @@ and open the template in the editor.
             au moment de former une chaine avec le tableau de css, combiner les propriétés compressibles. heh
             
  <?php 
-          //  require('tpl/form.php');
+            require('tpl/form.php');
             
           //  require('tpl/demos.php');
             ?>
