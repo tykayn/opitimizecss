@@ -20,8 +20,7 @@
             <div class="span5">
                 <h2>Entrée: '.$filepath.'</h2>
                 <div id="unoptimised"  class="css">
-                    <pre>
-                        '.  $file .'</pre>
+                    <pre>'.  $file .'</pre>
                 </div>
                 <div class="stats" >
                  '.  $longueur_old .' caractères.</div>

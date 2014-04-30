@@ -31,7 +31,7 @@ function cssToArray($css) {
     $css = removeComments($css);
     $tab = explode("}", $css);
     $newtab = array();
-
+//var_dump( $tab);
     foreach ($tab as $key => $value) {
         // tableau des propriétés à combiner pour le sélecteur en cours
 
@@ -44,18 +44,22 @@ function cssToArray($css) {
             // copier les instructions pour chaque partie entre les virgules.
 
             if (hasComma($selecteur)) {
+//                var_dump($selecteur);
                 $selec = explode(',', trim($selecteur));
                 sort($selec);
-                $selec = join(',', $selec);
+                $selec = trim(join(',', $selec));
+//                var_dump($selec);
                 if (isset($newtab[$selec])) {
                     $newtab[$selec] .=  $instructions;
+                    unset( $tab[$key]);
                 } else {
                     $newtab[$selec] =  $selec . '{' .$instructions;
                 }
             }
         }
+        
     }
-//    var_dump( $tab);
+//    var_dump( $newtab);
 //    var_dump($newtab);
     // fusion des tableaux
     $tab = array_merge($tab,  $newtab);
@@ -70,7 +74,10 @@ function cssToArray($css) {
  */
 function removeComments($css) {
 
-    return preg_replace("!/\*.*?\*/!ms", "", $css);
+   $str= preg_replace("!/\*.*?\*/!ms", "", $css);
+   $str= preg_replace("# ,#", ",", $str);
+    
+    return $str;
 }
 
 /**
@@ -214,9 +221,10 @@ function optimise($css) {
 //            var_dump($selecteur);
             // quand il y a plus d'une propriété/valeur
             $paires = explode(';', cleaner($instructions));
+            
             foreach ($paires as $p) {
                 if ($p != '') {
-
+                    
                     // séparer propriété et sa valeur
                     $explode = explode(':', $p);
                     //si pas d'instruction, ne pas prendre en compte la propriété.
@@ -225,6 +233,8 @@ function optimise($css) {
                     }
                     $propriete = trim($explode[0]);
                     $instruction = trim($explode[1]);
+                    
+                    
                     // si la propriété est compressible, la combiner
                     if (in_array($propriete, $GLOBALS['compressibles'])) {
                         //reprendre le tableau de mix s'il existe dans un sélecteur précédent.
@@ -244,11 +254,14 @@ function optimise($css) {
 //                        var_dump($propriete);
                         $watch[$selecteur]['compressed'] = $mix;
                     }
+//                    var_dump($selecteur . '_' .$propriete . '_ : ' . $instruction );
                     // si l'instruction est déjà présente pour ce sélecteur, l'écraser
                     if (!isset($watch[$selecteur][$propriete]) && $instruction != '') {
-                        $watch[$selecteur][$propriete] = $instruction;
+                        
+                        
                         $GLOBALS['ecrasement'] ++;
                     }
+                    $watch[$selecteur][$propriete] = $instruction;
                 }
             }
         }

@@ -1,4 +1,9 @@
-a,b {    display: inline-block;
+a,b{    display: inline-block;
 }
-b,a{    color: red;
+
+b,a     {    margin: 3px;
+}
+b,a     {    margin: 4px;
+}
+b,a     {    margin: 5px;
 }

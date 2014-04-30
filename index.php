@@ -39,7 +39,7 @@ and open the template in the editor.
             <h1>Optimiseur de CSS simple</h1>
 
             <?php
-            $filepath = "css/5.css";
+            $filepath = "css/8.css";
             require("tpl/demo_line.php");
             ?>
             <hr />
@@ -53,7 +53,7 @@ and open the template in the editor.
             <?php
             require('tpl/form.php');
 
-            //  require('tpl/demos.php');
+//              require('tpl/demos.php');
             ?>
 
             <div  class="">
