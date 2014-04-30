@@ -251,7 +251,7 @@ function printcss($array, $options = 1) {
             $echo .= '' . $key . '{';
 
             foreach ($value as $k => $v) {
-                $value .= '' . $k . ':' . $v;
+                $value .= '' . $k . ':' . $v.';';
             }
             $echo .= str_replace("Array", '', $value) . '}';
             $echo .= '<br/><br/>';

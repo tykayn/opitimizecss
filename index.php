@@ -47,8 +47,9 @@ and open the template in the editor.
             
             
             TODO:
+            rajout de ;
             rassembler les sélecteurs séparés par des virgules tel que a, b = b, a.
-            
+            -permettre d'extraire des instructions selon leur stype dans des résultats séparés. Par exemple: sortir un ensemble de sélecteurs ne donnant que des instructions sur les font-size, font-weight.
             
  <?php 
             require('tpl/form.php');
