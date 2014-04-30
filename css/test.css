@@ -2,14 +2,14 @@ a{     color: blue;
 }
 a{    font: arial;
 }
-
-
-
+/** j'aime les commentaires */
 
 a ,b {    display: inline-block;
 }
 b ,a{    color: red;
 }
+/** a,b et b,a c'est le B A BA du grand art */
+
 a{    font: arial;
 }
 a{    background: green;

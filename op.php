@@ -27,6 +27,8 @@ function cleaner($str) {
  * @param type $css
  */
 function cssToArray($css) {
+    
+    $css = removeComments($css);
     $tab = explode("}", $css);
     return $tab;
 }
@@ -125,8 +127,18 @@ function combine($mix) {
                 $mix['left'] . ' '
         ;
     }
-    return $str . ';';
+    return $str;
 }
+
+/**
+ * 
+ * @param type $tab
+ * @return array
+ */
+function commaTab($tab){
+   return $tab;
+}
+
 
 /**
  * convertit une chaine de css en tableau optimisé
@@ -148,12 +160,13 @@ function optimise($css) {
         $mix = array();
         $boom = explode('{', $value);
         $selecteur = trim(cleaner($boom[0]));
+
         if ($selecteur != null) {
 
-
+            $instructions = $boom[1];
 //            var_dump($selecteur);
             // quand il y a plus d'une propriété/valeur
-            $paires = explode(';', cleaner($boom[1]));
+            $paires = explode(';', cleaner($instructions));
             foreach ($paires as $p) {
                 if ($p != '') {
 
@@ -167,7 +180,6 @@ function optimise($css) {
                     $instruction = trim($explode[1]);
                     // si la propriété est compressible, la combiner
                     if (in_array($propriete, $GLOBALS['compressibles'])) {
-
                         //reprendre le tableau de mix s'il existe dans un sélecteur précédent.
                         if (!isset($watch[$selecteur]['compressed'])) {
                             $watch[$selecteur]['compressed'] = '';
@@ -183,11 +195,7 @@ function optimise($css) {
                         //  pour ensuite les combiner
                         $mix[$propriete][$side] = $instruction;
 //                        var_dump($propriete);
-
-
                         $watch[$selecteur]['compressed'] = $mix;
-
-//                        continue;
                     }
                     // si l'instruction est déjà présente pour ce sélecteur, l'écraser
                     if (!isset($watch[$selecteur][$propriete]) && $instruction != '') {
@@ -195,10 +203,6 @@ function optimise($css) {
                         $GLOBALS['ecrasement'] ++;
                     }
                 }
-            }
-//            var_dump($mix);
-            if (count($mix) > 0) {
-                $watch[$selecteur][$propriete] = combine($mix);
             }
         }
     }
@@ -251,7 +255,7 @@ function printcss($array, $options = 1) {
             $echo .= '' . $key . '{';
 
             foreach ($value as $k => $v) {
-                $value .= '' . $k . ':' . $v.';';
+                $value .= '' . $k . ':' . $v . ';';
             }
             $echo .= str_replace("Array", '', $value) . '}';
             $echo .= '<br/><br/>';
