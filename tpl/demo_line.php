@@ -20,7 +20,7 @@
             <div class="span5">
                 <h2>Entrée: '.$filepath.'</h2>
                 <div id="unoptimised"  class="css">
-                    <pre>'.  $file .'</pre>
+                    <pre class="lang-css prettyprint">'.  $file .'</pre>
                 </div>
                 <div class="stats" >
                  '.  $longueur_old .' caractères.</div>
@@ -29,7 +29,7 @@
                 <h2> Sortie:</h2>
                 
                 <div id="optimised" class="css" >
-                    <pre> '.$optimised.' </pre>
+                    <pre class="lang-css prettyprint"> '.$optimised.' </pre>
                 </div>
                 <div class="stats" >
                 '.  $longueur_new .' caractères. gain: '.  $gain_compression .'. réécritures: '. $GLOBALS['ecrasement']  .'

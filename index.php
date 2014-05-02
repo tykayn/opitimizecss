@@ -47,13 +47,13 @@ and open the template in the editor.
 
             TODO:
 
-            
+            -faire des sélecteurs a virgule si besoin
             -permettre d'extraire des instructions selon leur stype dans des résultats séparés. Par exemple: sortir un ensemble de sélecteurs ne donnant que des instructions sur les font-size, font-weight.
 
             <?php
             require('tpl/form.php');
 
-//              require('tpl/demos.php');
+            require('tpl/demos.php');
             ?>
 
             <div  class="">
@@ -74,7 +74,16 @@ and open the template in the editor.
                 </div>
             </footer>
         </div>
+        <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+        <script>
+            $(document).ready(function() {
+                    $('code,  pre').addClass('prettyprint linenums');
+                    $('.prettyprint').prettyPrint();
+            });
+        </script>
     </body>
 </html>
 
