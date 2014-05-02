@@ -14,22 +14,10 @@ and open the template in the editor.
     </head>
     <?php
     error_reporting(E_ALL);
-//    $filepath = "css/1.css";
-//    $file = file_get_contents($filepath);
-//    $file = str_replace(PHP_EOL, '', $file);
     $op = array();
     $lecss = '';
 
     require("op.php");
-
-    $lecss = setCss();
-    $newCss = opFromFile($lecss);
-//var_dump($newCss);
-//    $optimised = "";
-//    $optimised = printcss(optimise(trim($file)), 0);
-//    $longueur_old = strlen($file);
-//    $longueur_new = strlen($optimised);
-//    $gain_compression = (1 - round($longueur_new / $longueur_old, 2) ) * 100 . '%';
     ?>
 
     <body>
@@ -37,6 +25,15 @@ and open the template in the editor.
 
 
             <h1>Optimiseur de CSS simple</h1>
+
+            <?php
+            if (checkPost()) {
+                $lecss = setCss();
+                $newCss = opFromFile($lecss);
+                require('tpl/demo_post.php');
+            }
+            ?>
+            <h2>Démonstrations</h2>
 
             <?php
             $filepath = "css/8.css";
@@ -76,12 +73,12 @@ and open the template in the editor.
         </div>
         <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-        
+
         <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
         <script>
             $(document).ready(function() {
-                    $('code,  pre').addClass('prettyprint linenums');
-                    $('.prettyprint').prettyPrint();
+                $('code,  pre').addClass('prettyprint linenums');
+                $('.prettyprint').prettyPrint();
             });
         </script>
     </body>

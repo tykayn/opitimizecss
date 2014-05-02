@@ -332,9 +332,9 @@ function printcss($array, $options = 1) {
 }
 
 /**
- * enlève les retours à la ligne
- * @param type $file
- * @return type
+ * donne une chaine css optimisée à partir d'une chaine de css.
+ * @param string $file
+ * @return string
  */
 function opFromFile($file) {
     return printcss(optimise(trim($file)), 0);

@@ -21,7 +21,7 @@
                 
             </div>
                 <?php
-                if ($newCss != '') {
+                if (isset($newCss) && $newCss != '') {
 
                     echo ' <h1> Résultat:</h1> <div class="well" contenteditable=true > ' . $newCss . '</div>';
                 }
