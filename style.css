@@ -27,7 +27,19 @@ hr{
 
 }
 
-
+.palette{
+    padding: 0.5em;
+    background: #ccc;
+}
+.color_tile{
+    display: inline-block;
+    width: 6em;
+    height: 6em;
+    font-size: 1em;
+}
+.color_tile:hover{
+    color: #fff;
+}
 
 .linenums li{
     background: #dedede;

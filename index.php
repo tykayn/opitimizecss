@@ -26,6 +26,19 @@ and open the template in the editor.
 
             <h1>Optimiseur de CSS simple</h1>
 
+            <h2>
+                Palette de couleurs
+            </h2>
+            Exemple avec <a href="/css/colours.css">cette feuille de style</a>.
+            <div class="well">
+                Simplifiez vos feuilles de styles en ayant une idée des redéclarations de couleurs.
+            </div>
+            <?php
+            $filepath = "css/colours.css";
+            require("tpl/demo_palette.php");
+            ?>
+            <hr />
+            
             <?php
             if (checkPost()) {
                 $lecss = setCss();

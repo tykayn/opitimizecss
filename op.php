@@ -339,5 +339,17 @@ function printcss($array, $options = 1) {
 function opFromFile($file) {
     return printcss(optimise(trim($file)), 0);
 }
-
+/**
+ * donne un tableau des couleurs utilisées dans une feuille de style.
+ * @param type $file css file content
+ * @return array of colours
+ */
+function getColours($file){
+    $matches = array();
+    
+    $pattern = "/#[0-9a-f]{3,6}/i";
+    $array = preg_match_all($pattern, trim($file), $matches);
+    
+    return $matches;
+}
 ?>
