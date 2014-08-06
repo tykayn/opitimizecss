@@ -19,7 +19,7 @@ body{
 .row-fluid{
     display: block;
     float: none;
-    min-height: 200px;
+    min-height: 100px;
 }
 hr{
 

@@ -37,8 +37,8 @@ function cssToArray($css) {
 
         $boom = explode('{', $value);
         $selecteur = trim(cleaner($boom[0]));
-        
-        if ($selecteur != null &&count( $boom) > 1) {
+
+        if ($selecteur != null && count($boom) > 1) {
             $instructions = $boom[1];
             // si le sélecteur a des virgules,
             // copier les instructions pour chaque partie entre les virgules.
@@ -50,19 +50,18 @@ function cssToArray($css) {
                 $selec = trim(join(',', $selec));
 //                var_dump($selec);
                 if (isset($newtab[$selec])) {
-                    $newtab[$selec] .=  $instructions;
-                    unset( $tab[$key]);
+                    $newtab[$selec] .= $instructions;
+                    unset($tab[$key]);
                 } else {
-                    $newtab[$selec] =  $selec . '{' .$instructions;
+                    $newtab[$selec] = $selec . '{' . $instructions;
                 }
             }
         }
-        
     }
 //    var_dump( $newtab);
 //    var_dump($newtab);
     // fusion des tableaux
-    $tab = array_merge($tab,  $newtab);
+    $tab = array_merge($tab, $newtab);
 
 
     return $tab;
@@ -74,9 +73,9 @@ function cssToArray($css) {
  */
 function removeComments($css) {
 
-   $str= preg_replace("!/\*.*?\*/!ms", "", $css);
-   $str= preg_replace("# ,#", ",", $str);
-    
+    $str = preg_replace("!/\*.*?\*/!ms", "", $css);
+    $str = preg_replace("# ,#", ",", $str);
+
     return $str;
 }
 
@@ -221,10 +220,10 @@ function optimise($css) {
 //            var_dump($selecteur);
             // quand il y a plus d'une propriété/valeur
             $paires = explode(';', cleaner($instructions));
-            
+
             foreach ($paires as $p) {
                 if ($p != '') {
-                    
+
                     // séparer propriété et sa valeur
                     $explode = explode(':', $p);
                     //si pas d'instruction, ne pas prendre en compte la propriété.
@@ -233,8 +232,8 @@ function optimise($css) {
                     }
                     $propriete = trim($explode[0]);
                     $instruction = trim($explode[1]);
-                    
-                    
+
+
                     // si la propriété est compressible, la combiner
                     if (in_array($propriete, $GLOBALS['compressibles'])) {
                         //reprendre le tableau de mix s'il existe dans un sélecteur précédent.
@@ -257,8 +256,8 @@ function optimise($css) {
 //                    var_dump($selecteur . '_' .$propriete . '_ : ' . $instruction );
                     // si l'instruction est déjà présente pour ce sélecteur, l'écraser
                     if (!isset($watch[$selecteur][$propriete]) && $instruction != '') {
-                        
-                        
+
+
                         $GLOBALS['ecrasement'] ++;
                     }
                     $watch[$selecteur][$propriete] = $instruction;
@@ -339,17 +338,36 @@ function printcss($array, $options = 1) {
 function opFromFile($file) {
     return printcss(optimise(trim($file)), 0);
 }
+
 /**
  * donne un tableau des couleurs utilisées dans une feuille de style.
  * @param type $file css file content
  * @return array of colours
  */
-function getColours($file){
+function getColours($file) {
     $matches = array();
-    
+
     $pattern = "/#[0-9a-f]{3,6}/i";
     $array = preg_match_all($pattern, trim($file), $matches);
-    
+
     return $matches;
 }
+/**
+ * 
+ * @param type $matches
+ */
+function ePalette($file) {
+    echo makePalette(getColours($file));
+}
+function makePalette($matches) {
+    $rendu = "palette: <div class='palette'>";
+    $pal = array_unique($matches[0]);
+    sort($pal);
+    foreach ($pal as $key => $value) {
+        $rendu .="<div class='color_tile' style='background: $value'>$value</div>";
+    }
+    $rendu .="</div>";
+    return $rendu;
+}
+
 ?>
